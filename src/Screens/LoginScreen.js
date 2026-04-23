@@ -17,7 +17,6 @@ export default function LoginScreen({ navigation, users, setCurrentUser }) {
   const [loading, setLoading] = useState(false);
   const [mostrarPassword, setMostrarPassword] = useState(false);
 
-
   useFocusEffect(
     useCallback(() => {
       setEmail("");
@@ -76,8 +75,8 @@ export default function LoginScreen({ navigation, users, setCurrentUser }) {
         <TouchableOpacity
           onPress={() => setMostrarPassword(!mostrarPassword)}
         >
-          <Text style={styles.ojito}>
-            {mostrarPassword ? "X" : "O"}
+          <Text style={styles.verTexto}>
+            {mostrarPassword ? "Ocultar" : "Ver"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -86,14 +85,14 @@ export default function LoginScreen({ navigation, users, setCurrentUser }) {
         <ActivityIndicator size="large" color="#FFB6C1" style={styles.loader} />
       ) : (
         <TouchableOpacity style={styles.loginButton} onPress={login}>
-          <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+          <Text style={styles.loginButtonText}>Iniciar Sesion</Text>
         </TouchableOpacity>
       )}
 
       <TouchableOpacity onPress={() => navigation.navigate("Register")}>
         <Text style={styles.registerLink}>
           ¿No tienes cuenta?{" "}
-          <Text style={styles.registerLinkBold}>Regístrate</Text>
+          <Text style={styles.registerLinkBold}>Registrate</Text>
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -144,8 +143,10 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize: 16,
   },
-  ojito: {
-    fontSize: 20,
+  verTexto: {
+    fontSize: 14,
+    color: "#E75480",
+    fontWeight: "bold",
     padding: 5,
   },
   loginButton: {

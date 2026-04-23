@@ -7,7 +7,7 @@ import ProfileScreen from "../Screens/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 
-export default function NavigationTab({ currentUser, cart, setCart, orders, setOrders }) {
+export default function NavigationTab({ currentUser, setCurrentUser, cart, setCart, orders, setOrders, users, setUsers }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -56,9 +56,12 @@ export default function NavigationTab({ currentUser, cart, setCart, orders, setO
             {...props}
             currentUser={currentUser}
             orders={orders}
+            users={users}
+            setUsers={setUsers}
+            setCurrentUser={setCurrentUser}
           />
         )}
-      </Tab.Screen>
+  </Tab.Screen>
     </Tab.Navigator>
   );
 }

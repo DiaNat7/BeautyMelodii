@@ -28,7 +28,7 @@ export default function DetailScreen({ navigation, route, cart, setCart }) {
       setCart((prev) => [...prev, { ...product, cantidad: 1 }]);
     }
 
-    Alert.alert("Éxito", "Producto agregado al carrito 🛒");
+    Alert.alert("Éxito", "Producto agregado al carrito ");
   };
 
   return (
@@ -60,7 +60,7 @@ export default function DetailScreen({ navigation, route, cart, setCart }) {
           style={styles.cartButton}
           onPress={agregarAlCarrito}
         >
-          <Text style={styles.cartButtonText}>🛒 Agregar al carrito</Text>
+          <Text style={styles.cartButtonText}> Agregar al carrito</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

@@ -33,17 +33,20 @@ export default function NavigationStack({ users, setUsers, currentUser, setCurre
       </Stack.Screen>
 
       <Stack.Screen name="MainTabs">
-        {(props) => (
-          <NavigationTab
-            {...props}
-            currentUser={currentUser}
-            cart={cart}
-            setCart={setCart}
-            orders={orders}
-            setOrders={setOrders}
-          />
-        )}
-      </Stack.Screen>
+  {(props) => (
+    <NavigationTab
+      {...props}
+      currentUser={currentUser}
+      setCurrentUser={setCurrentUser}
+      cart={cart}
+      setCart={setCart}
+      orders={orders}
+      setOrders={setOrders}
+      users={users}
+      setUsers={setUsers}
+    />
+  )}
+</Stack.Screen>
 
       <Stack.Screen name="Detail">
         {(props) => (

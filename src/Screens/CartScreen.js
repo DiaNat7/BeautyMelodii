@@ -74,14 +74,14 @@ export default function CartScreen({ cart, setCart, orders, setOrders }) {
   if (cart.length === 0) {
     return (
       <SafeAreaView style={styles.centered}>
-        <Text style={styles.emptyText}>Tu carrito está vacío 🛒</Text>
+        <Text style={styles.emptyText}>Tu carrito está vacío </Text>
       </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Mi Carrito 🛒</Text>
+      <Text style={styles.header}>Mi Carrito </Text>
 
       <FlatList
         data={cart}
