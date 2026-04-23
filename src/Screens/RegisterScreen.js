@@ -21,6 +21,16 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
       return;
     }
 
+    if (password.length < 5) {
+      Alert.alert("Error", "La contraseña debe tener al menos 8 caracteres");
+      return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      Alert.alert("Error", "La contraseña debe tener al menos una mayúscula");
+      return;
+    }
+
     setLoading(true);
 
     setTimeout(() => {
@@ -34,6 +44,9 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
       const nuevoUsuario = { nombre, email, password };
       setUsers((prev) => [...prev, nuevoUsuario]);
       Alert.alert("Éxito", "Cuenta creada. ¡Ahora inicia sesión!");
+      setNombre("");
+      setEmail("");
+      setPassword("");
       navigation.goBack();
       setLoading(false);
     }, 1500);
@@ -65,6 +78,10 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
         onChangeText={setPassword}
         secureTextEntry
       />
+
+      <Text style={styles.hint}>
+        La contraseña debe tener al menos 5 caracteres y una mayúscula
+      </Text>
 
       {loading ? (
         <ActivityIndicator size="large" color="#FFB6C1" style={styles.loader} />
@@ -109,6 +126,12 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 16,
     backgroundColor: "#FFF",
+  },
+  hint: {
+    fontSize: 12,
+    color: "#FFB6C1",
+    textAlign: "center",
+    marginBottom: 10,
   },
   registerButton: {
     backgroundColor: "#E75480",

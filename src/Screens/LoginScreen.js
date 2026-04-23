@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
+  View,
   TextInput,
   StyleSheet,
   Text,
@@ -8,11 +9,21 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function LoginScreen({ navigation, users, setCurrentUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+
+
+  useFocusEffect(
+    useCallback(() => {
+      setEmail("");
+      setPassword("");
+    }, [])
+  );
 
   const login = () => {
     if (!email || !password) {
@@ -32,6 +43,8 @@ export default function LoginScreen({ navigation, users, setCurrentUser }) {
         navigation.navigate("MainTabs");
       } else {
         Alert.alert("Error", "Email o contraseña incorrectos");
+        setEmail("");
+        setPassword("");
       }
 
       setLoading(false);
@@ -40,7 +53,7 @@ export default function LoginScreen({ navigation, users, setCurrentUser }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}> Beauty by Melodii</Text>
+      <Text style={styles.title}>Beauty by Melodii</Text>
       <Text style={styles.subtitle}>Inicia sesión para continuar</Text>
 
       <TextInput
@@ -52,13 +65,22 @@ export default function LoginScreen({ navigation, users, setCurrentUser }) {
         autoCapitalize="none"
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Contraseña"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!mostrarPassword}
+        />
+        <TouchableOpacity
+          onPress={() => setMostrarPassword(!mostrarPassword)}
+        >
+          <Text style={styles.ojito}>
+            {mostrarPassword ? "X" : "O"}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {loading ? (
         <ActivityIndicator size="large" color="#FFB6C1" style={styles.loader} />
@@ -106,6 +128,25 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 16,
     backgroundColor: "#FFF",
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#FFB6C1",
+    borderRadius: 12,
+    marginBottom: 15,
+    backgroundColor: "#FFF",
+    paddingRight: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 15,
+    fontSize: 16,
+  },
+  ojito: {
+    fontSize: 20,
+    padding: 5,
   },
   loginButton: {
     backgroundColor: "#FFB6C1",
