@@ -155,35 +155,33 @@ const HomeScreen = ({ navigation }) => {
     getProducts();
   }, []);
 
-  const getProducts = () => {
+const getProducts = () => {
     const URL = "https://makeup-api.herokuapp.com/api/v1/products.json";
 
     fetch(URL)
       .then((res) => {
-        if (!res.ok) {
-          throw new Error("Algo salió mal con la API");
-        }
+        if (!res.ok) throw new Error("Error al conectar con la API");
         return res.json();
       })
       .then((data) => {
-        const primeros = data.slice(0, 100);
-
-        const filtrados = primeros.filter(
+       const filtrados = data.filter(
           (item) =>
-            item.image_link &&
-            item.image_link.startsWith("http") &&
-            item.price &&
-            item.price !== "0.0"
+            item.price && 
+            item.price !== "0.0" && 
+            item.image_link && 
+            item.brand
         );
 
-        const apiConCategoria = filtrados.slice(0, 10).map(item => ({
+         const seleccionados = filtrados.slice(0, 25);
+
+         const apiMapeada = seleccionados.map(item => ({
           ...item,
+          id: item.id.toString(),
+          price: item.price,
           category: mapApiCategory(item.product_type)
         }));
 
-        const catalogoFinal = [...yuyaProducts, ...apiConCategoria];
-        
-        setProducts(catalogoFinal);
+        setProducts([...yuyaProducts, ...apiMapeada]);
         setIsLoading(false);
       })
       .catch((err) => {
