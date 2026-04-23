@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  View,
   TextInput,
   StyleSheet,
   Text,
@@ -14,6 +15,7 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   const registrar = () => {
     if (!nombre || !email || !password) {
@@ -21,7 +23,7 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
       return;
     }
 
-    if (password.length < 5) {
+    if (password.length < 8) {
       Alert.alert("Error", "La contraseña debe tener al menos 8 caracteres");
       return;
     }
@@ -43,7 +45,7 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
 
       const nuevoUsuario = { nombre, email, password };
       setUsers((prev) => [...prev, nuevoUsuario]);
-      Alert.alert("Éxito", "Cuenta creada. ¡Ahora inicia sesión!");
+      Alert.alert("Exito", "Cuenta creada. Ahora inicia sesion!");
       setNombre("");
       setEmail("");
       setPassword("");
@@ -55,7 +57,7 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Crear cuenta</Text>
-      <Text style={styles.subtitle}>¡Únete a Beauty by Melodii!</Text>
+      <Text style={styles.subtitle}>Unete a Beauty by Melodii!</Text>
 
       <TextInput
         style={styles.input}
@@ -71,16 +73,26 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Contraseña"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!mostrarPassword}
+        />
+        <TouchableOpacity
+          onPress={() => setMostrarPassword(!mostrarPassword)}
+        >
+          <Text style={styles.verTexto}>
+            {mostrarPassword ? "Ocultar" : "Ver"}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <Text style={styles.hint}>
-        La contraseña debe tener al menos 5 caracteres y una mayúscula
+        La contraseña debe tener al menos 8 caracteres y una mayuscula
       </Text>
 
       {loading ? (
@@ -92,7 +104,7 @@ export default function RegisterScreen({ navigation, users, setUsers }) {
       )}
 
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={styles.backLink}>¿Ya tienes cuenta? Inicia sesión</Text>
+        <Text style={styles.backLink}>Ya tienes cuenta? Inicia sesion</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -126,6 +138,27 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 16,
     backgroundColor: "#FFF",
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#FFB6C1",
+    borderRadius: 12,
+    marginBottom: 15,
+    backgroundColor: "#FFF",
+    paddingRight: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 15,
+    fontSize: 16,
+  },
+  verTexto: {
+    fontSize: 14,
+    color: "#E75480",
+    fontWeight: "bold",
+    padding: 5,
   },
   hint: {
     fontSize: 12,
