@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 
 export default function NavigationTab({ currentUser, cart, setCart, orders, setOrders }) {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Products">
         {(props) => (
           <HomeScreen

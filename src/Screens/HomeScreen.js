@@ -7,6 +7,8 @@ import {
   Image,
   ActivityIndicator,
   TouchableOpacity,
+  ScrollView,
+  Alert,
 } from "react-native";
 
 const yuyaProducts = [
@@ -102,7 +104,7 @@ const yuyaProducts = [
   }
 ];
 
-const CATEGORIES = ["Todos", "Rostro", "Ojos", "Labios", "Skincare", "Otros"];
+const CATEGORIES = ["Todos", "Rostro", "Ojos", "Labios", "Skincare"];
 
 const mapApiCategory = (productType) => {
   if (!productType) return "Otros";
@@ -113,6 +115,34 @@ const mapApiCategory = (productType) => {
   if (["eyeliner", "eyeshadow", "mascara", "eyebrow"].includes(type)) return "Ojos";
   
   return "Otros"; 
+};
+
+const ProductCard = ({ item, navigation }) => {
+  const [isBroken, setIsBroken] = useState(false);
+
+  const secureLink = item.image_link 
+    ? item.image_link.replace(/^http:\/\//i, 'https://') 
+    : null;
+
+  if (!secureLink || isBroken) {
+    return null; 
+  }
+
+  return (
+    <TouchableOpacity
+      style={styles.cardContainer}
+      onPress={() => navigation.navigate("Detail", { product: item })}
+    >
+      <Image
+        source={{ uri: secureLink }}
+        style={styles.image}
+        resizeMode="contain"
+        onError={() => setIsBroken(true)}
+      />
+      <Text style={styles.name}>{item.name}</Text>
+      <Text style={styles.price}>${item.price}</Text>
+    </TouchableOpacity>
+  );
 };
 
 const HomeScreen = ({ navigation }) => {
@@ -208,29 +238,12 @@ const HomeScreen = ({ navigation }) => {
         </ScrollView>
       </View>
 
-
       <FlatList
         showsVerticalScrollIndicator={false}
         data={filteredProducts}
         keyExtractor={(item) => item.id.toString()} 
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.cardContainer}
-            onPress={() => navigation.navigate("Detail", { product: item })}
-          >
-            <Image
-              source={{
-                uri:
-                  item.image_link ||
-                  "https://via.placeholder.com/150",
-              }}
-              style={styles.image}
-              resizeMode="contain"
-            />
-
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.price}>${item.price} </Text>
-          </TouchableOpacity>
+          <ProductCard item={item} navigation={navigation} />
         )}
       />
     </View>
@@ -243,7 +256,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF5F5",
-    paddingTop: 20,
+    paddingTop: 50,
   },
   centered: {
     flex: 1,
@@ -258,7 +271,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 10,
   },
-
   filterContainer: {
     paddingVertical: 10,
     paddingHorizontal: 10,
@@ -284,7 +296,6 @@ const styles = StyleSheet.create({
   filterTextActive: {
     color: "#fff",
   },
-  
   cardContainer: {
     backgroundColor: "#FFF",
     borderRadius: 10,

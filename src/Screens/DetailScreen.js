@@ -42,13 +42,18 @@ export default function DetailScreen({ navigation, route, cart, setCart }) {
 
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{product.name}</Text>
-          <Text style={styles.brand}> Marca: {product.brand}</Text>
+          <Text style={styles.brand}> Marca: {product.brand || "Beauty Melodii"}</Text>
           <Text style={styles.price}> Precio: ${product.price}</Text>
-          <Text style={styles.detail}> Tipo: {product.product_type}</Text>
+          
+          <Text style={styles.detail}> Descripción: {product.description || "Este producto no tiene descripción."}</Text>
+          
+          <Text style={styles.detail}> Tipo: {product.product_type || "Cosmético"}</Text>
           <Text style={styles.detail}> Categoría: {product.category ? product.category : "N/A"}</Text>
-          <Text style={styles.detail}>Rating: {product.rating ? product.rating : "N/A"}</Text>
+          <Text style={styles.detail}> Rating: {product.rating ? product.rating : "N/A"}</Text>
+          
+          
           <Text style={styles.detail}>
-             Tags: {product.tag_list.length > 0 ? product.tag_list.join(", ") : "N/A"}
+              Tags: {product.tag_list && product.tag_list.length > 0 ? product.tag_list.join(", ") : "N/A"}
           </Text>
         </View>
 

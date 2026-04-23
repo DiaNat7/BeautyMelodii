@@ -1,12 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import NavigationStack from "./src/Navigation/NavigationStack";
 
 export default function App() {
+  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [orders, setOrders] = useState([]);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <NavigationStack
+        users={users}
+        setUsers={setUsers}
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+        cart={cart}
+        setCart={setCart}
+        orders={orders}
+        setOrders={setOrders}
+      />
+    </NavigationContainer>
   );
 }
 

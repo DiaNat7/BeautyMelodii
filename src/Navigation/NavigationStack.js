@@ -1,4 +1,5 @@
 import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../Screens/LoginScreen";
 import RegisterScreen from "../Screens/RegisterScreen";
@@ -9,7 +10,7 @@ const Stack = createNativeStackNavigator();
 
 export default function NavigationStack({ users, setUsers, currentUser, setCurrentUser, cart, setCart, orders, setOrders }) {
   return (
-    <Stack.Navigator>
+   <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login">
         {(props) => (
           <LoginScreen
