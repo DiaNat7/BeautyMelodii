@@ -49,7 +49,6 @@ export default function DetailScreen({ navigation, route, cart, setCart }) {
           
           <Text style={styles.detail}> Tipo: {product.product_type || "Cosmético"}</Text>
           <Text style={styles.detail}> Categoría: {product.category ? product.category : "N/A"}</Text>
-          <Text style={styles.detail}> Rating: {product.rating ? product.rating : "N/A"}</Text>
           
           
           <Text style={styles.detail}>
